@@ -28,11 +28,10 @@ function App() {
     fetch(`http://localhost:3001/pets/${id}`, {
       method: "PATCH",
       headers: { "Content-type": "application/json" },
-      body: JSON.stringify({ isAdopted: isAdopted ? false : true })
+      body: JSON.stringify({ isAdopted: true})
     })
+    onFindPetsClick()
   }
-
-  console.log(pets)
 
   return (
     <div className="ui container">

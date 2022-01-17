@@ -20,13 +20,12 @@ function Pet( {pet, onAdoptPet} ) {
       </div>
       <div className="extra content">
         <button 
-          onClick={onAdoptPet} 
-          className={isAdopted ? "ui disabled button" : "ui primary button"}>
+          className={isAdopted ? "ui primary button" : "ui disabled button"}>
             Already adopted
         </button>
         <button 
-          onClick={onAdoptPet}
-          className={isAdopted ? "ui primary button" : "ui disabled button" }>
+          onClick={() => onAdoptPet(id)}
+          className={!isAdopted ? "ui primary button" : "ui disabled button" }>
             Adopt pet
         </button>
       </div>
