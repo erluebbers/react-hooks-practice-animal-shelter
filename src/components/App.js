@@ -5,7 +5,34 @@ import PetBrowser from "./PetBrowser";
 
 function App() {
   const [pets, setPets] = useState([]);
-  const [filters, setFilters] = useState({ type: "all" });
+  const [filters, setFilters] = useState("all");
+
+  function onChangeType(event) {
+    setFilters(event.target.value)
+  }
+
+  function onFindPetsClick() {
+    if (filters === "all") {
+      fetch("http://localhost:3001/pets")
+        .then(r => r.json())
+        .then(data => setPets(data))
+    }
+    else {
+      fetch(`http://localhost:3001/pets?type=${filters}`)
+        .then(r => r.json())
+        .then(data => setPets(data))
+    }
+  }
+
+  function onAdoptPet(id) {
+    fetch(`http://localhost:3001/pets/${id}`, {
+      method: "PATCH",
+      headers: { "Content-type": "application/json" },
+      body: JSON.stringify({ isAdopted: isAdopted ? false : true })
+    })
+  }
+
+  console.log(pets)
 
   return (
     <div className="ui container">
@@ -15,10 +42,10 @@ function App() {
       <div className="ui container">
         <div className="ui grid">
           <div className="four wide column">
-            <Filters />
+            <Filters onChangeType={onChangeType} onFindPetsClick={onFindPetsClick}/>
           </div>
           <div className="twelve wide column">
-            <PetBrowser />
+            <PetBrowser pets={pets} onAdoptPet={onAdoptPet}/>
           </div>
         </div>
       </div>
